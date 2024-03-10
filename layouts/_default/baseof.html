@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="{{ or site.Language.LanguageCode site.Language.Lang }}" dir="{{ or site.Language.LanguageDirection `ltr` }}">
+<head>
+  {{ partial "head/main.html" . }}
+  {{ partial "head/metadata.html" . }}
+  {{ partial "head/themeColor.html" .}} 
+  {{ partial "head/bootstrap.html"}}
+  {{ partial "head/iconFonts.html"}}
+</head>
+<body>
+  {{ block "header" .}}
+  <header id="header" class="border-bottom bg-body">
+    {{ partial "header/main.html" . }}
+    {{- if .Section}} 
+    {{ partial "header/section.html" . }}
+    {{- end}}
+  </header>
+  {{- end}}
+
+  <main class="mx-3">
+    {{ block "main" . }}{{ end }}
+  </main>
+  
+  {{ block "footer" .}}
+  <footer>
+    {{ partial "footer/main.html" . }}
+  </footer>
+  {{- end}}
+
+  {{- block "modals" .}}
+  <!-- Modals: Debug and Info Menu-->
+  {{ partial "modals/debug-and-info.html" . }}
+  <!-- Modals: PSA -->
+  {{ partial "modals/announcements.html" . }}
+  {{- end}}
+</body>
+</html>

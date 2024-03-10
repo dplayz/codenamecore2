@@ -1,0 +1,113 @@
+<!-- Debug mode modal -->
+<div class="modal fade" id="debugMenuModal" tabindex="-1" aria-labelledby="debugMenuModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg-down">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="debugMenuModalLabel">Debug Menu</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <button type="button" class="btn btn-primary d-flex my-1 " data-bs-toggle="modal" data-bs-target="#announcementsModal">
+          <i class="bi bi-megaphone-fill"></i> Open Announcements Menu 
+        </button>
+        <button type="button" class="btn btn-primary d-flex my-1" data-bs-toggle="modal" data-bs-target="#siteThemeColorDebugModal">
+          <i class="bi bi-circle-half"></i> Site Theme Color
+        </button>
+        <button type="button" class="btn btn-primary d-flex my-1" data-bs-toggle="modal" data-bs-target="#searchModal">
+          <i class="bi bi-search"></i> Search Modal
+        </button>
+        <button type="button" class="btn btn-primary d-flex my-1" data-bs-toggle="modal" data-bs-target="#themeInfoModal">
+          <i class="bi bi-info-circle"></i> About this theme
+        </button>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Theme information modal -->
+<div class="modal fade" id="themeInfoModal" tabindex="-1" aria-labelledby="themeInfoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg-down">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="themeInfoModalLabel">Theme Information</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">  
+        <table class="table table-striped ">
+          <tr>
+            <th>Hugo Version</th>
+            <td>{{ hugo.Version}}</td>
+          </tr>
+          <tr>
+            <th>Theme Version </th>
+            <td>beta (still not being populated)</td>
+          </tr>
+          <tr>
+            <th>Build Environment</th>
+            <td>{{hugo.Environment}}</td>
+          </tr>
+          <tr>
+            <th>Last Build</th>
+            <td>{{now.Format "20060102150405"}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Site Theme Color Debug Modal -->
+<div class="modal fade" id="siteThemeColorDebugModal" tabindex="-1" aria-labelledby="siteThemeColorDebugModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg-down">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="themeInfoModalLabel">Site Theme Color Debug</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">  
+        <button type="button" class="btn btn-primary align-items-center active" data-bs-theme-value="light" aria-pressed="true">
+          <i class="bi bi-sun-fill"></i>
+          Light
+          <svg class="bi d-none" height="20px" width="20px"><use href="#check2"></use></svg>
+        </button>
+        <button type="button" class="btn btn-primary align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+          <i class="bi bi-moon-stars-fill"></i>
+          Dark  
+        </button>
+        <button type="button" class="btn btn-primary align-items-center" data-bs-theme-value="auto" aria-pressed="false">
+          <i class="bi bi-circle-half"></i>
+          Auto
+          <svg class="bi d-none" height="20px" width="20px"><use href="#check2"></use></svg>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Search Modal -->
+<div class="modal" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="searchModalLabel">Search</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">  
+        <p>This feature is not yet implemented</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

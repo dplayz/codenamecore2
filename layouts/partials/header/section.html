@@ -1,0 +1,39 @@
+{{- with .Site.GetPage (.Section) }}
+<nav class="px-2 py-0 border-top navbar container-fluid navbar-expand-lg navbar-light">
+    <div class="d-flex align-items-center">
+    <a class="navbar-brand" href="/{{.Section}}">
+        <img  src="https://placehold.co/30x30/png" width="30px"> 
+        {{- if .Params.details.name}}
+        {{.Params.details.name}}
+        {{- else}}
+        {{.Title}}
+        {{- end}}
+    </a>
+    <button class="navbar-toggler btn-sm fs-6 btn-link btn" type="button" data-bs-toggle="collapse" data-bs-target="#sectionNavbar" aria-controls="sectionNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="bi bi-caret-down-fill"></span>
+    </button>
+    </div>
+    <div class="collapse navbar-collapse" id="sectionNavbar">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          {{- range .Params.details.menu}}
+          {{- if .links}}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{.name}}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              {{- range .links}}
+              <li><a class="dropdown-item" href="{{.url}}">{{.name}}</a></li>
+              {{- end}}
+            </ul>
+          </li>
+          {{- else}}
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="{{.url}}">{{.name}}</a>
+          </li>
+          {{- end}}
+          {{- end}}
+        </ul>
+    </div>
+</nav>
+{{- end}}

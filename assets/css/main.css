@@ -1,0 +1,12 @@
+
+header#header{
+  position:sticky;
+  top: 0;
+  margin:0;
+}
+
+body footer{
+  width:100%;
+  clear:both;
+  background:orangered;
+}
