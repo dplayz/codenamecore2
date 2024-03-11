@@ -1,11 +1,7 @@
 {{ define "main" }}
-  {{- if eq .Page.Params.single true}}
+<main class="mx-3 h-100">
+  <section class="homepage">
     {{.Content}}
-  {{- else }}
-  {{ .Content }}
-  {{ range site.RegularPages }}
-    <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-    {{ .Summary }}
-  {{ end }}
-  {{- end}}
+  </section>
+</main>
 {{ end }}

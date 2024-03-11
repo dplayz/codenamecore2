@@ -1,12 +1,11 @@
 {{ define "main" }}
-<main class="mx-3 h-100">
+<main class="mx-3 my-2 p-2 border rounded  h-100">
   <section class="blog-title my-3 text-center">
-    
-    <img class="img-fluid border rounded" src="https://placehold.co/600x400">
     <h1>{{.Title}}</h1>
-    <h6>Authored by: {{.Params.author}}</h6>
-    <h6>Published {{.Params.date}}</h6>
-    <hr>
+    <br>
+    <img width="15%" src="https://placehold.co/30x30">
+    <h6>{{.Params.author}}</h6>
+    <h6>{{.Params.date}}</h6>
   </section>
   <section class="blog-content">
     {{.Content}}

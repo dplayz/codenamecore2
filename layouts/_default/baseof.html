@@ -16,10 +16,9 @@
     {{- end}}
   </header>
   {{- end}}
-
-  <main class="mx-3">
-    {{ block "main" . }}{{ end }}
-  </main>
+    
+  {{- block "main" . }}
+  {{- end }}
   
   {{ block "footer" .}}
   <footer>

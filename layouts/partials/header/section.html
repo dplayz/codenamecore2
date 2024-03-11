@@ -9,13 +9,14 @@
         {{.Title}}
         {{- end}}
     </a>
+    {{- with .Params.details.menu}}
     <button class="navbar-toggler btn-sm fs-6 btn-link btn" type="button" data-bs-toggle="collapse" data-bs-target="#sectionNavbar" aria-controls="sectionNavbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="bi bi-caret-down-fill"></span>
     </button>
     </div>
     <div class="collapse navbar-collapse" id="sectionNavbar">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          {{- range .Params.details.menu}}
+          {{- range .}}
           {{- if .links}}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -35,5 +36,6 @@
           {{- end}}
         </ul>
     </div>
+    {{- end}}
 </nav>
 {{- end}}

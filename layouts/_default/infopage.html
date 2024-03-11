@@ -1,0 +1,7 @@
+{{- define "header" }}{{- partial "header/themeColorToggler" .}}{{- end }}
+{{- define "footer" }}<!---->{{- end }}
+{{ define "main" }}
+<main class="mx-auto my-5 p-5 h-100 w-75 align-items-center text-center border rounded">
+    {{.Content}}
+</main>
+{{ end }}
