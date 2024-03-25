@@ -1,0 +1,14 @@
+<div class="accordion" {{ with .Get "id" }} id="{{ . }}AcrdnBase"{{ end }}>
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse"  aria-expanded="true" {{ with .Get "id" }} data-bs-target="#{{.}}AcrdnBody" aria-controls="#{{.}}AcrdnBody" {{ end }}>
+        {{ with (.Get "name")}}{{.}}{{end}}
+      </button>
+    </h2>
+    <div class="accordion-collapse collapse" {{ with .Get "id" }} id="{{ . }}AcrdnBody" data-bs-parent="#{{.}}AcrdnBase" {{ end }}>
+      <div class="accordion-body">
+        {{.Inner}}
+      </div>
+    </div>
+  </div>
+</div>

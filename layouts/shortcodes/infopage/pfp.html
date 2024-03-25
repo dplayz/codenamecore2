@@ -1,0 +1,6 @@
+<img  
+    class="infopage-pfp rounded-circle" 
+    {{- if (.Get "gravatar-email")}} src='https://www.gravatar.com/avatar/{{.Get "gravatar-email" | md5}}?s=150'
+    {{- else }} src='{{.Get "src"}}'
+    {{- end}}
+/>
