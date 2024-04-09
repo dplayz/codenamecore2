@@ -1,9 +1,13 @@
 <div class="dropdown">
     <button class="btn btn-sm btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (light)" data-twofas-element-number="1">
       <i class="theme-icon-active bi bi-circle-half"></i>
-      <span class="d-lg-none ms-2" id="bd-theme-text">Toggle theme</span>
+      <span class="d-lg-none ms-2" id="bd-theme-text">
+        {{- if ne .Params.layout "infopage"}}
+        Toggle theme
+        {{- end}}
+      </span>
     </button>
-    <ul class="dropdown-menu" aria-labelledby="bd-theme-text">
+    <ul class='dropdown-menu {{ if ne .Params.layout "infopage"}}dropdown-menu-end{{ end}}' aria-labelledby="bd-theme-text">
       <li>
         <button type="button" class="btn-sm dropdown-item d-flex align-items-center active" data-bs-theme-value="light" aria-pressed="true">
           <i class="bi bi-sun-fill"></i>
