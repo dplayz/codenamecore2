@@ -1,9 +1,17 @@
+{{- $siteLogo := "https://placehold.co/60x60/png" -}}
+{{- with .Site.Params.identity.general.logo}}
+  {{- $siteLogo = . -}}
+{{- end}}
+{{- $siteTitle := "" -}}
+{{- with .Site.Title}}
+  {{- $siteTitle = . -}}
+{{- end}}
+{{- $siteBaseURL := .Site.BaseURL -}}
 <nav class="px-2 navbar container-fluid navbar-expand-lg">
-
-    <a class="navbar-brand" href="#">
-        <img src="https://placehold.co/60x60/png" width="60px"> 
+    <a class="navbar-brand" href="{{$siteBaseURL}}">
+        <img src="{{$siteLogo}}" width="60px">
+        <small>{{$siteTitle}}</small>
     </a>
     {{ partial "header/menu.html" . }}
-    
     </div>
 </nav>

@@ -1,20 +1,29 @@
 {{- with .Site.GetPage (.Section) }}
+{{- $sectionTitle := .Title -}}
+{{- with .Params.details.name}}
+  {{- $sectionTitle = . -}}
+{{- end}}
+{{- $sectionMenu := .Params.details.menu }}
 <nav class="px-2 py-0 border-top navbar container-fluid navbar-expand-lg navbar-light">
     <div class="d-flex align-items-center">
+      {{- if $sectionMenu}}
+      <button class="navbar-toggler btn-sm fs-6 btn me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSectionNavbar" aria-controls="offcanvasSectionNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      {{- end}}
     <a class="navbar-brand" href="/{{.Section}}">
-        <img  src="https://placehold.co/30x30/png" width="30px"> 
-        {{- if .Params.details.name}}
-        {{.Params.details.name}}
-        {{- else}}
-        {{.Title}}
-        {{- end}}
+        <img src="https://placehold.co/30x30/png" width="30px"> 
+        {{ $sectionTitle }}
     </a>
-    {{- with .Params.details.menu}}
-    <button class="navbar-toggler btn-sm fs-6 btn-link btn" type="button" data-bs-toggle="collapse" data-bs-target="#sectionNavbar" aria-controls="sectionNavbar" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="bi bi-caret-down-fill"></span>
-    </button>
-    </div>
-    <div class="collapse navbar-collapse" id="sectionNavbar">
+    {{ with $sectionMenu }}
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSectionNavbar" data-bs-backdrop="true" aria-labelledby="offcanvasSectionNavbarLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasSectionNavbarLabel">
+          {{$sectionTitle}}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           {{- range .}}
           {{- if .links}}
@@ -34,8 +43,10 @@
           </li>
           {{- end}}
           {{- end}}
-        </ul>
+        </ul>   
+      </div>
     </div>
+
     {{- end}}
 </nav>
 {{- end}}
