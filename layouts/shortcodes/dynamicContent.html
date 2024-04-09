@@ -1,0 +1,10 @@
+<div class="dynamicContent d-none" id='dynamicContent--{{.Get "id"}}'>{{.Inner}}</div>
+{{- with (.Get "id")}}
+<script>
+  if (urlParamValues.display{{. | safeJS }} == "true")
+  {
+    item = document.getElementById('dynamicContent--{{ . }}');
+    item.classList.remove("d-none");
+  }
+</script>
+{{- end}}
