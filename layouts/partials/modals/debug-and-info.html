@@ -29,7 +29,7 @@
 </div>
 
 <!-- Theme information modal -->
-<div class="modal fade" id="themeInfoModal" tabindex="-1" aria-labelledby="themeInfoModalLabel" aria-hidden="true">
+<div class="modal animate__animated animate__zoomIn" id="themeInfoModal" tabindex="-1" aria-labelledby="themeInfoModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg-down">
     <div class="modal-content">
       <div class="modal-header">
@@ -55,6 +55,9 @@
             <td>{{now.Format "20060102150405"}}</td>
           </tr>
         </table>
+        <p>Site Parameters</p>
+        {{ $config := .Site.Params | jsonify}}
+        <pre>{{- transform.Remarshal "yaml" $config -}}</pre>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
