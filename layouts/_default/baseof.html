@@ -9,7 +9,7 @@
 </head>
 <body>
   {{ block "header" .}}
-  <header id="header" class="border-bottom bg-body">
+  <header id="header" class="border-bottom bg-body z-3">
     {{ partial "header/main.html" . }}
     {{- if .Section}} 
     {{ partial "header/section.html" . }}
