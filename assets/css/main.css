@@ -1,4 +1,14 @@
+/* Bootstrap-adapted custom styles*/
+html[data-bs-theme="light"] .bg-auto{
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-light-rgb),var(--bs-bg-opacity)) !important;
+}
+html[data-bs-theme="dark"] .bg-auto{
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity)) !important;
+}
 
+/* Base Layouts */
 header#header{
   position:sticky;
   top: 0;
