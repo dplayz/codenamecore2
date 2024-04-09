@@ -1,0 +1,4 @@
+<a class="btn btn-primary btn-lg d-flex" {{- if (.Get "href")}} href='{{.Get "href"}}' {{- else}}#{{- end}} role="button">
+    {{- with (.Get "icon")}}<i class='{{.}}'>&nbsp;</i>{{- end}}
+    {{.Get "name"}}
+</a>

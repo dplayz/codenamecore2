@@ -1,8 +1,11 @@
 <div class="accordion" {{ with .Get "id" }} id="{{ . }}AcrdnBase"{{ end }}>
-  <div class="accordion-item">
+  <div class="accordion-item border-secondary ">
     <h2 class="accordion-header">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse"  aria-expanded="true" {{ with .Get "id" }} data-bs-target="#{{.}}AcrdnBody" aria-controls="#{{.}}AcrdnBody" {{ end }}>
-        {{ with (.Get "name")}}{{.}}{{end}}
+      <button class="accordion-button bg-primary" type="button" data-bs-toggle="collapse"  aria-expanded="true" {{ with .Get "id" }} data-bs-target="#{{.}}AcrdnBody" aria-controls="{{.}}AcrdnBody" {{ end }}>
+        <span class="text-light">
+          {{- with (.Get "icon")}}<i class='{{.}}'>&nbsp;</i>{{- end}}
+          {{ with (.Get "name")}}{{.}}{{end}}
+        </span>
       </button>
     </h2>
     <div class="accordion-collapse collapse" {{ with .Get "id" }} id="{{ . }}AcrdnBody" data-bs-parent="#{{.}}AcrdnBase" {{ end }}>

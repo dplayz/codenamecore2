@@ -1,0 +1,10 @@
+
+{{- with (.Get "href")}}
+<a href="{{.}}" class="text-body">
+{{- end}}  
+  {{- with (.Get "class")}}
+  <i class="{{.}} fa-2x"></i>
+  {{- end}}
+{{- if (.Get "href")}}
+</a>
+{{- end}}
