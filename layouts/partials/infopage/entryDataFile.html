@@ -1,0 +1,28 @@
+{{- $data := index .Site.Data (.Page.Params.entryDataFile) }}
+{{- range $data.data }}
+    {{- if .text}}
+    <p>{{.text}}</p>
+    {{- else if .subsection}} 
+    {{- if .subsection.dynamicContentId}}
+    <div class="dynamicContent d-none" id='dynamicContent--{{.subsection.dynamicContentId}}'>
+      {{ partial "infopage/entryDataFile--subsection-recursive.html" .}}
+    </div>
+    {{- with (.subsection.dynamicContentId)}}
+    <script>
+      if (urlParamValues.display{{. | safeJS }} == "true")
+      {
+        item = document.getElementById('dynamicContent--{{ . }}');
+        item.classList.remove("d-none");
+      }
+    </script>
+    {{- end}}
+    {{- else }}
+    {{ partial "infopage/entryDataFile--subsection-recursive.html" .}}
+    {{- end}}
+    {{- else }}
+    <a class="btn btn-primary btn-lg d-flex" {{- if .url}}href="{{.url}}"{{- else}}#{{- end}} role="button">
+        <i class="{{.icon}}">&nbsp;</i>
+        {{.name}}
+    </a>
+    {{- end}}
+{{- end }}
