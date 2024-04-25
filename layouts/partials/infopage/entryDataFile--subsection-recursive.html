@@ -1,0 +1,31 @@
+{{- with .subsection}}
+    <div class="accordion" {{ with .id }} id="{{ . }}AcrdnBase"{{ end }}>
+        <div class="accordion-item border-secondary ">
+          <h2 class="accordion-header">
+            <button class="accordion-button bg-primary" type="button" data-bs-toggle="collapse"  aria-expanded="true" {{ with .id }} data-bs-target="#{{.}}AcrdnBody" aria-controls="{{.}}AcrdnBody" {{ end }}>
+              <span class="text-light">
+                {{- with (.icon)}}<i class='{{.}}'>&nbsp;</i>{{- end}}
+                {{ with (.name)}}{{.}}{{end}}
+              </span>
+            </button>
+          </h2>
+          <div class="accordion-collapse collapse" {{ with .id }} id="{{ . }}AcrdnBody" data-bs-parent="#{{.}}AcrdnBase" {{ end }}>
+            <div class="accordion-body">
+              {{- range .entries}}
+              {{- if .text}}
+              <p>{{.text}}</p>
+              {{- else if .subsection}} {{ partial "infopage/entryDataFile--subsection-recursive.html" .}} 
+              {{- else }}
+                <a class="btn btn-primary btn-lg d-flex" {{- if .url}}href="{{.url}}"{{- else}}#{{- end}} role="button">
+                    <i class="{{.icon}}">&nbsp;</i>
+                    {{.name}}
+                </a>
+              {{- end}}
+
+                </a>
+            {{- end}}
+            </div>
+          </div>
+        </div>
+    </div>
+{{- end}} 
