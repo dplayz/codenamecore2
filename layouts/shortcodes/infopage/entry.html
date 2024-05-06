@@ -1,4 +1,26 @@
-<a class="btn btn-primary btn-lg d-flex" {{- if (.Get "href")}} href='{{.Get "href"}}' {{- else}}#{{- end}} role="button">
+{{- if (or (.Get "popoverTitle") (.Get "popoverContent"))}}
+<div class="btn-group bg-primary btn-lg border-secondary border d-flex">
+  <a class="btn btn-primary my-0 btn-lg flex-grow-1 d-flex" {{- if (.Get "url")}} href="{{.Get "url"}}" {{- else}} href="#"{{- end}} role="button">
+    <i class='{{.Get "icon"}}'>&nbsp;</i>
+    {{.Get "name"}}
+  </a>
+  <button 
+    style="padding:0; margin:0; "
+    type="button" 
+    class="flex-shrink-1 flex-grow-0 btn px-3 btn-lg btn-primary " 
+    data-bs-toggle="popover" 
+    data-trigger="hover focus"
+    data-placement="top"
+    oncontextmenu="return false;"
+    {{with (.Get "popoverTitle" )}}data-bs-title="{{.}}" {{end}}
+    {{with (.Get "popoverContent" )}}data-bs-content="{{.}}" {{ end}}>
+    {{if (.Get "popoverIcon" )}}<i class="{{.Get "popoverIcon" }}"></i> {{else}} <i class="bi bi-info-circle-fill"></i>{{end}}
+
+  </button>
+</div>
+{{- else }}
+<a class="btn btn-primary btn-lg d-flex" {{- if (.Get "url")}} href='{{.Get "url"}}' {{- else}} href="#" {{- end}} role="button">
     {{- with (.Get "icon")}}<i class='{{.}}'>&nbsp;</i>{{- end}}
     {{.Get "name"}}
 </a>
+{{- end}}
