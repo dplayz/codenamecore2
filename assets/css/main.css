@@ -38,3 +38,56 @@ main.infopage .accordion-button{
   box-shadow:unset;
   border-radius:var(--bs-accordion-inner-border-radius);
 }
+
+/* Blog TOC Layout
+  TOC must be explicitly enabled
+*/
+@media (min-width: 992px) {
+  main[data-page-toc="true"].main-content section.blog-toc
+  {
+    position:sticky;
+    top:10rem;
+    right:0;
+    z-index:2;
+    height:calc(100vh - 12rem);
+    overflow-y: auto;
+  }
+  main.main-content[data-page-toc="true"].blog-postlike{
+    display:grid;
+    grid-template-areas: 
+      "bpTtl bpTOC"
+      "bpDesc bpTOC"
+      "bpCnts bpTOC"
+      "bpInteractions bpTOC";
+  }
+  main.main-content[data-page-toc="true"].blog-default{
+    display:grid;
+    grid-template-areas: 
+      "bpTtl bpTtl"
+      "bpCnts bpTOC"
+      "bpInteractions bpTOC";
+  }
+  main.main-content[data-page-toc="true"].blog-default section.blog-content{
+    width:90%;
+  }
+  main.main-content[data-page-toc="true"].blog-default section.blog-toc{
+    width:10vw;
+  }
+  main[data-page-toc="true"].main-content section.blog-title{
+    grid-area: bpTtl;
+  }
+  main[data-page-toc="true"].main-content section.blog-toc{
+    grid-area: bpTOC;
+  }
+  main[data-page-toc="true"].main-content.blog-postlike section.blog-postlike-author-desc{
+    grid-area: bpDesc;
+  }
+  main[data-page-toc="true"].main-content section.blog-content{
+    grid-area: bpCnts;
+  
+  }
+  main[data-page-toc="true"].main-content section.blog-interactions{
+    grid-area: bpInteractions;
+  }
+}
+

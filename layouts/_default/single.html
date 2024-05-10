@@ -1,13 +1,20 @@
 {{ define "main" }}
-<main class="mx-3 h-100 px-3 py-1 bg-auto">
+<main class="main-content blog-default mx-3 h-100 px-3 py-1" bg-auto {{ if eq .Params.toc true}}data-page-toc="true"{{end}}>
   <section class="blog-title my-3 text-center">
-    
     <img class="img-fluid border rounded" src="https://placehold.co/600x400">
     <h1>{{.Title}}</h1>
     <h6>Authored by: {{.Params.author}}</h6>
     <h6>Published {{.Params.date}}</h6>
-    <hr>
+    <hr>    
   </section>
+  {{- if eq .Params.toc true}}
+  <section class="blog-toc">
+    On this page:
+    <nav id="navbar-toc" class="text-body-secondary">
+    </nav>
+  </section>
+  <hr>
+  {{- end}}
   <section class="blog-content">
     {{.Content}}
   </section>
