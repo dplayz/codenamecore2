@@ -24,6 +24,10 @@
   <footer>
     {{ partial "footer/main.html" . }}
   </footer>
+  {{- end}} 
+
+  {{- block "ending-scripts" .}}
+  {{- partial "scripts/ending-scripts.html" .}}
   {{- end}}
 
   {{- block "modals" .}}
