@@ -1,5 +1,5 @@
 {{- if (or (.Get "popoverTitle") (.Get "popoverContent"))}}
-<div class="btn-group bg-primary btn-lg border-secondary border d-flex">
+<div class="btn-group bg-primary my-1 btn-lg border-secondary border d-flex">
   <a class="btn btn-primary my-0 btn-lg flex-grow-1 d-flex" {{- if (.Get "url")}} href="{{.Get "url"}}" {{- else}} href="#"{{- end}} role="button">
     <i class='{{.Get "icon"}}'>&nbsp;</i>
     {{.Get "name"}}
@@ -19,7 +19,7 @@
   </button>
 </div>
 {{- else }}
-<a class="btn btn-primary btn-lg d-flex" {{- if (.Get "url")}} href='{{.Get "url"}}' {{- else}} href="#" {{- end}} role="button">
+<a class="btn btn-primary btn-lg d-flex text-start" {{- if (.Get "url")}} href='{{.Get "url"}}' {{- else}} href="#" {{- end}} role="button">
     {{- with (.Get "icon")}}<i class='{{.}}'>&nbsp;</i>{{- end}}
     {{.Get "name"}}
 </a>
