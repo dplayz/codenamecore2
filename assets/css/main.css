@@ -91,3 +91,7 @@ main.infopage .accordion-button{
   }
 }
 
+/* Icon Fixes*/
+.btn .fa-brands, .btn .fa-solid, .btn .fa-regular, .btn .fa{
+	margin-top:5px;
+}
