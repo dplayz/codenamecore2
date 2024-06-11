@@ -12,6 +12,26 @@ body footer{
 }
 
 /* Infopage custom css */
+@media (max-width: 768px){
+  main.infopage{
+    width: 90% !important;
+  }
+}
+@media (max-width: 568px){
+  main.infopage{
+    width: 95% !important;
+  }
+}
+@media (max-width: 768px){
+  main.infopage{
+    width: 90% !important;
+  }
+}
+@media (max-width: 568px){
+  main.infopage{
+    width: 95% !important;
+  }
+}
 main.infopage > * {
   width:80%;
   margin-left:auto;
@@ -33,6 +53,10 @@ main.infopage a.btn
   margin:5px auto;
   max-width:1150px;
 } 
+main.infopage a.btn{
+  overflow-wrap: anywhere;
+}
+
 
 main.infopage .accordion-button{
   box-shadow:unset;
