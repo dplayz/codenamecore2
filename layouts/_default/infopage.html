@@ -1,7 +1,7 @@
 {{- define "header" }}{{- partial "header/themeColorToggler" .}}{{- end }}
 {{- define "footer" }}<!---->{{- end }}
 {{ define "main" }}
-<main class="infopage mx-auto my-3 p-3 h-100 w-75 align-items-center text-center border rounded shadow-lg bg-auto">
+<main id="infopage" class="infopage mx-auto my-3 p-3 h-100 w-75 align-items-center text-center border rounded shadow-lg bg-auto">
     {{.Content}}
     {{- if .Params.entryDataFile}}
     {{ partial "infopage/entryDataFile.html" .}}
