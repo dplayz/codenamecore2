@@ -26,9 +26,18 @@
       {{- end}}
     </div>
     {{ else }}
-    <a class="btn btn-primary btn-lg d-flex text-start" {{- if .url}}href="{{.url}}"{{- else}}#{{- end}} role="button">
-        <i class="{{.icon}}">&nbsp;</i>
-        {{.name}}
+    {{if .imgFullScreen}}
+    <div class="spotlight-group d-flex flex-grow-1 ">
+    <a class="spotlight btn btn-primary my-0 btn-lg d-flex flex-grow-1 text-start" {{with .imgFullScreenId}}id="{{.}}"{{- end}} {{with .imgFullScreenSrc}}href="{{.}}"{{- end}}>
+      <i class="{{.icon}}">&nbsp;</i>
+      {{.name}}
     </a>
+    </div>
+    {{- else}}
+    <a class="btn btn-primary my-0 btn-lg flex-grow-1 text-start d-flex" {{- if .url}}href="{{.url}}"{{- else}}#{{- end}} role="button">
+      <i class="{{.icon}}">&nbsp;</i>
+      {{.name}}
+    </a>
+    {{- end}}
     {{- end}}
 {{- end }}
