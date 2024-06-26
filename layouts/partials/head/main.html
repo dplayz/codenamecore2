@@ -5,7 +5,11 @@
     var urlParamValues = {};
     const urlParams = new URLSearchParams(window.location.search);
     for (const [key, value] of urlParams) {
-        urlParamValues[key] = value;
+        if (value.includes(",")){
+            urlParamValues[key] = value.split(",");
+        } else {
+            urlParamValues[key] = value;
+        }
     }
 </script>
 {{ partial "head/css.html" . }}
