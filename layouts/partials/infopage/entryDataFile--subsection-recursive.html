@@ -2,7 +2,7 @@
     <div class="accordion my-1" {{ with .id }} id="{{ . }}AcrdnBase"{{ end }}>
         <div class="accordion-item border-secondary ">
           <h2 class="accordion-header">
-            <button class="accordion-button bg-primary" type="button" data-bs-toggle="collapse"  aria-expanded="true" {{ with .id }} data-bs-target="#{{.}}AcrdnBody" aria-controls="{{.}}AcrdnBody" {{ end }}>
+            <button {{ with .id }} id="{{ . }}"{{ end }} class="accordion-button bg-primary" type="button" data-bs-toggle="collapse"  aria-expanded="true" {{ with .id }} data-bs-target="#{{.}}AcrdnBody" aria-controls="{{.}}AcrdnBody" {{ end }}>
               <span class="text-light">
                 {{- with (.icon)}}<i class='{{.}}'>&nbsp;</i>{{- end}}
                 {{ with (.name)}}{{.}}{{end}}
