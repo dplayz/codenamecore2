@@ -9,7 +9,8 @@
     </div>
     {{- with (.subsection.dynamicContentId)}}
     <script>
-      if (urlParamValues.display{{. | safeJS }} == "true")
+      if (((urlParamValues.display != undefined && urlParamValues.display.includes("{{. | safeJS }}")) == true) || 
+           (urlParamValues.display{{. | safeJS }} == "true"))
       {
         item = document.getElementById('dynamicContent--{{ . }}');
         item.classList.remove("d-none");
