@@ -1,28 +1,26 @@
 {{ $child_pages := union .Sections .Pages }}
 <li class="nav-link navbar-nav border-0 my-0 p-0">
   <div class="dropdown">
-    <button class="nav-link lead dropdown-toggle border-0 my-0 p-0" data-bs-toggle="dropdown" aria-expanded="false">
-      {{.Title}}
-    </button>
-    <ul class="dropdown-menu border-0 p-0 m-0">
-      <form>
-      <ul class="navbar-nav ps-3 m-0">
-        <li><a class="dropdown-item p-0"  href="{{ .RelPermalink }}">
-          <i class="bi bi-list"></i> Section Index
-        </a></li>
-        {{ range $child_pages.ByTitle }}                                
-          {{ if or (.Sections) (.Pages) }}
-          {{ partial "header/section/menu-recursive.html" . }}
-          {{- else}}
-
-          <li><a class="dropdown-item p-0"  href="{{ .RelPermalink }}">
-            <i class="bi bi-arrow-return-right"></i> {{ .Title }}
-          </a></li>    
+    <div class="btn-group nav-link my-0 p-0" role="group" aria-label="Basic example">
+      <a type="button" href="{{ .RelPermalink }}" class="nav-link d-inline">
+        {{.Title}}
+      </a>
+      <button type="button" class="nav-link d-inline dropdown-toggle border-0 my-0 p-0" data-bs-toggle="dropdown" aria-expanded="false"></button>
+      <ul class="dropdown-menu border-0 p-0 m-0">
+        <form>
+        <ul class="navbar-nav ps-3 m-0">
+          {{ range $child_pages.ByTitle}}                                
+            {{ if or (.Sections) (.Pages) }}
+            {{ partial "header/section/menu-recursive.html" . }}
+            {{- else}}
+            <li><a class="dropdown-item p-0 ps-2" href="{{ .RelPermalink }}">
+              {{ .Title }}
+            </a></li>    
+            {{ end }}
           {{ end }}
-        {{ end }}
+        </ul>
+        </form>
       </ul>
-      </form>
-    </ul>
-
+    </div>
   </div>
 </li>
