@@ -5,9 +5,8 @@
       <a type="button" href="{{ .RelPermalink }}" class="nav-link d-inline">
         {{.Title}}
       </a>
-      <button type="button" class="nav-link d-inline dropdown-toggle border-0 my-0 p-0" data-bs-toggle="dropdown" aria-expanded="false"></button>
-      <ul class="dropdown-menu border-0 p-0 m-0">
-        <form>
+      <button type="button" class="btn-lg header-section-menu nav-link d-inline dropdown-toggle border-0 my-0 p-0" data-bs-toggle="dropdown" aria-expanded="false"></button>
+      <ul class="dropdown-menu border-0 p-0 header-section-vl">
         <ul class="navbar-nav ps-3 m-0">
           {{ range $child_pages.ByTitle}}                                
             {{ if or (.Sections) (.Pages) }}
@@ -19,7 +18,6 @@
             {{ end }}
           {{ end }}
         </ul>
-        </form>
       </ul>
     </div>
   </div>
