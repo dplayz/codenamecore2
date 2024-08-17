@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="turbo-visit-control" content="reload"><meta name="turbo-visit-control" content="reload">
+    <link href="/cmsconfig.yaml" type="text/yaml" rel=  "cms-config-url">
+    <!--<style>
+      @media(prefers-color-scheme:dark){
+        body{
+          background-color:#0f172a;
+        }
+      }
+    </style>-->
+    <title>Content Manager</title>
+  </head>
+  <body>
+    <!-- Include the script and stylesheet that builds the page and powers Static CMS v3.0-beta -->
+    <script src="https://unpkg.com/@staticcms/app@^4.0.0/dist/static-cms-app.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@staticcms/app@^4.0.0/dist/main.css" /> 
+    <!-- Include script that will bring Hugo shortcodes to the CMS editor-->
+    <!--<script src="/admin/shortcodes.js"></script>-->
+    <!--Initialize the CMS (because IDK why, docs said)-->
+    <script>
+      window.CMS.init();
+    </script>
+  </body>
+</html>

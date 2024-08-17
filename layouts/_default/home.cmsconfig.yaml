@@ -1,0 +1,700 @@
+{{- if eq .Site.Params.cms.backend.name "git-gateway" }}
+backend: 
+  name: {{.Site.Params.cms.backend.name}}
+  branch: {{.Site.Params.cms.backend.gitgateway.branch}}
+{{- else if eq .Site.Params.cms.backend.name "github"}}
+backend:
+  name: {{.Site.Params.cms.backend.name}}
+  repo: {{.Site.Params.cms.backend.github.repo}}
+  {{- if eq .Site.Params.cms.backend.github.useGraphQL true}}
+  use_graphql: true
+  {{- end }}
+  base_url: {{.Site.BaseURL}}  
+  {{-  if .Site.Params.cms.backend.github.auth_endpoint}}
+  auth_endpoint: {{.Site.Params.cms.backend.github.auth_endpoint}}  
+  {{- end}}
+  {{- if eq .Site.Params.cms.backend.github.openAuthoring true}}
+  open_authoring: true
+  {{- end }}
+  branch: {{.Site.Params.cms.backend.github.branch}}
+{{- else if eq .Site.Params.cms.backend.name "gitlab"}}
+backend:
+  name: {{.Site.Params.cms.backend.gitlab.name}}
+  repo: {{.Site.Params.cms.backend.gitlab.repo}}
+  branch: {{.Site.Params.cms.backend.gitlab.branch}}
+  {{- if eq .Site.Params.cms.backend.gitlab.useGraphQL true}}
+  use_graphql: true
+  {{- end }}
+  {{if .Site.Params.cms.backend.gitlab.auth_type "pkce" }}
+  auth_type: {{.Site.Params.cms.backend.gitlab.auth_type}}
+  app_id: {{.Site.Params.cms.backend.gitlab.app_id}}
+  {{- end}} 
+{{- else if eq .Site.Params.cms.backend.name "bitbucket"}}
+backend:
+  name: {{.Site.Params.cms.backend.bitbucket.name}}
+  repo: {{.Site.Params.cms.backend.bitbucket.repo}}
+  branch: {{.Site.Params.cms.backend.bitbucket.branch}}
+  {{if .Site.Params.cms.backend.bitbucket.auth_type "implicit" }}
+  auth_type: {{.Site.Params.cms.backend.bitbucket.auth_type}}
+  app_id: {{.Site.Params.cms.backend.bitbucket.app_id}}
+  {{- end}} 
+{{- else if eq .Site.Params.cms.backend.name "azure"}}
+backend:
+  name: {{.Site.Params.cms.backend.azure.name}}
+  repo: {{.Site.Params.cms.backend.azure.repo}}
+  tenant_id: {{.Site.Params.cms.backend.azure.tenant_id}}
+  app_id: {{.Site.Params.cms.backend.azure.app_id}}
+{{- else if eq .Site.Params.cms.backend.name "test-repo"}}
+backend: 
+  name: {{.Site.Params.cms.backend.testrepo.name}}
+{{- end}}
+{{- if .Site.Params.cms.media_folder}}
+media_folder: {{.Site.Params.cms.media_folder}}
+{{- end}}
+{{- if .Site.Params.cms.public_folder}}
+public_folder: {{.Site.Params.cms.public_folder}}
+{{- end}}
+{{- if .Site.Params.cms.display_url}}
+display_url: {{.Site.Params.cms.display_url}}
+{{- else}}
+display_url: {{.Site.BaseURL}}
+{{- end}}
+{{- if .Site.Params.cms.logo_url}}
+logo_url: {{.Site.Params.cms.logo_url}}
+{{- else if .Site.Params.identity.general.logo}}
+logo_url: {{.Site.Params.identity.general.logo}}
+{{- end}}
+{{- if and (eq hugo.Environment "development") (ne .Site.Params.cms.disableLocalBackend true)}}
+local_backend: true 
+{{- end}}
+media_library:
+  max_file_size: 26214400
+collections:  
+{{- with .Site.Params.cms.collections}}
+  {{- range .}}
+    {{- with .name}}
+  - name: {{.}}
+    {{- end}}
+    {{- with .label}}
+    label: {{.}}
+    {{- end}}
+    {{- with .folder}}
+    folder: {{.}}
+    {{- end}}
+    {{- with .create}}
+    create: {{.}}
+    {{- end}}
+    {{- with .slug}}
+    slug: "{{.}}"
+    {{- end}}
+    {{- if eq .fieldType "defaultFields"}}
+    fields:
+      - { label: 'Page Thumbnail', name: 'thumbnail', widget: 'image', required: false, collapsed: true }
+      - { label: 'Title', name: 'title', widget: 'string'}
+      - { label: 'Publish Date', name: 'date', widget: 'datetime'}
+      - { label: 'Author', name: 'author', widget: 'list', required: false }
+      - { label: 'Description', name: 'description', widget: 'string', required: false}
+      - { label: 'Body', name: 'body', widget: 'markdown', show_raw: true, required: false }
+      - { label: 'Tags', name: tags, widget: list, required: false}
+      - { label: 'Categories', name: categories, widget: list, required: false}
+      - { label: 'Permalink', name: 'permalink', widget: 'string', required: false}
+      - label: "Build Options" 
+        name: "_build" 
+        collapse: false
+        widget: "object"
+        fields:
+          - { label: "List page", name: "list", widget: "select", multiple: false, options: ["never", "always"], default: "always"}
+      # Section specific values, should be hidden
+      - { name: header_color, widget: hidden, required: false }
+      - { name: header_color_dark, widget: hidden, required: false }
+      - { name: header_textcolor, widget: hidden, required: false }
+      - { name: header_textcolor_dark, widget: hidden, required: false }
+      - { name: header_logo, widget: hidden, required: false }
+    {{- else if eq .fieldType "markdownOnly"}}
+    fields: 
+      - { label: 'Body', name: 'body', widget: 'markdown'}
+    {{else}}
+    {{- with .fields}}
+    fields:    
+      {{- range .}}
+      - { {{- with .label}}label: "{{.}}", {{end}} {{- with .name}} name: "{{.}}", {{end}} widget: "{{if .type}}{{.type}}{{else}}{{.widget}}{{end}}", {{- with .picker_utc}} picker_utc: {{.}}, {{end}}{{- with .required}} required: {{.}}, {{end}}{{- with .default}} default: {{.}},{{end}}}
+      {{- end}}
+    {{- end}}
+    {{- end}}
+  {{- end}}
+{{- end}}
+  - label: "Site Configuration"
+    name: "config"
+    editor: { preview: false } 
+    files:
+    - name: "config"
+      label: "Build and Theme Configuration"
+      file: "config.yml"
+      fields: 
+        - { name: baseURL, label: 'Base URL', widget: string, required: true, default: "/" }
+        - { name: languageCode, label: 'Language Code', widget: string, required: true }
+        - { name: title, label: 'Site Name', widget: string, required: true, default: "Your Site"}   
+        - { name: theme, label: "Theme", widget: string, required: true, default: "codenamecore" }
+        - name: params  
+          label: 'Site Parameters'
+          widget: object
+          fields: 
+            - label: "Site Identity Information"
+              name: identity
+              required: false
+              widget: object
+              collapsed: true
+              fields:
+                - label: "General"
+                  name: general
+                  widget: object
+                  collapsed: true
+                  fields: 
+                    - { name: logo, label: 'Site Logo', widget: image, default: /images/logo.png, required: false }
+                    - { name: description, label: 'Site Default Description', widget: text, required: false }
+                    - { label: "Favicon URL", name: favicon, widget: image, default: "favicon.ico", required: false }
+                    - { label: "Default Page Preview Thumbnail", name: pagePreviewImage, widget: image, required: false}
+                    - label: "Default Author Options"
+                      name: defaultAuthor
+                      widget: object
+                      collapsed: true
+                      fields:
+                        - { name: name, label: 'Name', widget: string}
+                        - { name: description, label: 'Description', widget: string, required: false}                    
+                - label: "PWA"
+                  name: pwa
+                  widget: object
+                  collapsed: true
+                  required: false
+                  fields:
+                    - { label: "App Name", name: appName, widget: string, required: false }
+                    - { label: "Short App Name", name: shortAppName, widget: string, required: false }
+                    - { label: "Custom Splash", name: customSplashImage, widget: image, required: false }
+                - label: "Search Engine"
+                  name: webmaster
+                  widget: object
+                  collapsed: true
+                  fields:
+                    - { label: "Google Search Console Verification Code", name: googleSiteVerificationCode, widget: string, required: false, condition: { field: params.identity.webmaster.noIndexAll, value: false } }
+                    - { label: "Bing Webmaster Tools Site Validation Code", name: bingValidationCode, widget: string, required: false, condition: { field: params.identity.webmaster.noIndexAll, value: false } }
+                    - { label: "Yandex.Webmaster Site Validation Code", name: yandexValidationCode, widget: string, required: false, condition: { field: params.identity.webmaster.noIndexAll, value: false } }
+                    - { name: noIndexAll, label: 'Do not Index site to Search Engines', widget: boolean, default: false, required: false } 
+                - label: "SDKs"
+                  name: sdk
+                  widget: object
+                  required: false
+                  collapsed: true
+                  fields:
+                    - { label: "Facebook SDK ID", name: fbSDKID, widget: string, required: false}
+                    - { label: "OneSignal SDK ID", name: onesignalSDKID, widget: string, required: false}
+                    - label: "WidgetBot.io's Crate"
+                      name: widgetbotcrate
+                      widget: object
+                      required: false
+                      collapsed: true
+                      fields:
+                      - { label: "Server ID", name: serverid, widget: string, required: false}
+                      - { label: "Channel ID", name: channelid, widget: string, required: false}
+                - label: "Analytics"
+                  name: analytics
+                  widget: object
+                  required: false
+                  collapsed: true
+                  fields:
+                    - { label: "Google Analytics", name: googleAnalytics, widget: object, required: false, fields: [{label: "Measurement ID", name: measurementID, widget: string, required: false}, {label: "Disable Page View on whole site" , name: disablePageView, widget: boolean, required: false }], collapsed: true }
+                - label: "SNS Information"
+                  name: snsInfo
+                  required: false
+                  widget: object
+                  collapsed: true
+                  fields:
+                    - { label: "Facebook Page ID", name: fbPageID, widget: string, required: false}
+            - label: "Website Announcements/PSA"
+              name: psa
+              widget: object
+              required: false
+              collapsed: true
+              fields:
+                - name: enable
+                  label: Enable Announcements
+                  required: false
+                  default: false
+                  widget: boolean
+                - name: entries
+                  label: Entries
+                  collapsed: true
+                  required: false
+                  widget: list
+                  fields:
+                      - { label: "Announcement Content", name: content, widget: markdown }
+                      - { label: "Background Color", name: color, widget: color, required: false} 
+                      - { label: "Only display one time / enable close button", name: oneTime, widget: boolean, required: false, default: false }
+                      - { label: "One-Time Announcement ID", name: id, widget: string, required: false }   
+
+                      - { label: "One-Time Announcement Button Text", name: buttonText, widget: string, required: false} 
+                      - { label: "One-Time Announcement Button Color", name: buttonColor, widget: color, required: false}                    
+            - label: 'Theme Configuration'
+              name: theme
+              required: false
+              widget: object
+              collapsed: true
+              fields:
+              - name: linkcolor
+                label: 'Color of the Links'
+                required: false
+                widget: object
+                collapsed: true
+                fields:
+                - { name: main, label: 'Main links', widget: color, default: "lightblue", required: false} 
+                - { name: visited, label: 'Visited links', widget: color, default: "lightblue", required: false }
+              - label: 'Text Color'
+                name: textColor
+                widget: object
+                required: false
+                collapsed: true
+                fields:
+                - { name: light, label: 'Default/Light Mode Color', widget: color, required: false} 
+                - { name: dark, label: 'Dark Mode Color', widget: color, required: false , condition: { field: params.theme.textColor.noDarkMode, value: false } }
+                - { name: noDarkMode, label: 'Disable Dark Mode Colors', widget: boolean, default: false, required: false }
+              - name: themeColor
+                label: 'Browser Toolbar Color'
+                widget: object
+                required: false
+                collapsed: true
+                fields:
+                  - { name: light, label: 'Light/Default Mode', widget: color, required: false}
+                  - { name: dark, label: 'Dark Mode', widget: color, required: false}
+              - name: background
+                label: 'Background Options'
+                widget: object
+                required: false
+                collapsed: true
+                fields:
+                - name: color
+                  label: 'Color'
+                  widget: object
+                  required: false
+                  fields: 
+                  - { name: type, label: 'type', widget: select, options: ["solid", "lineargradient"], required: false }
+                  - { name: lightdarkscheme, label: "Enable light-dark scheme", widget: boolean, required: false }
+                  - name: lineargradient
+                    label: lineargradient
+                    widget: object
+                    required: false
+                    collapsed: true
+                    condition: 
+                      field: params.theme.background.color.type
+                      value: lineargradient
+                    fields:
+                    - name: light
+                      label: "Light Mode"
+                      widget: object
+                      required: false
+                      collapsed: true
+                      fields:
+                      - name: left
+                        label: "Left"
+                        widget: object
+                        required: false
+                        fields:
+                          - { name: color, label: "Color", widget: color, required: false }
+                          - { name: position, label: "Position", widget: string, default: 10%, required: false }
+                      - name: right
+                        label: "Right"
+                        required: false
+                        widget: object
+                        fields:
+                          - { name: color, label: "Color", widget: color, required: false }
+                          - { name: position, label: "Position", widget: string, default: 50%, required: false }
+                    - name: dark
+                      label: "Dark Mode"
+                      required: false
+                      widget: object
+                      collapsed: true
+                      condition: 
+                        field: params.theme.background.color.lightdarkscheme
+                        value: true
+                      fields:
+                      - name: left
+                        label: "Left"
+                        required: false
+                        widget: object
+                        fields:
+                          - { name: color, label: "Color", widget: color, required: false }
+                          - { name: position, label: "Position", widget: string, default: 10%, required: false }
+                      - name: right
+                        label: "Right"
+                        required: false
+                        widget: object
+                        fields:
+                          - { name: color, label: "Color", widget: color, required: false }
+                          - { name: position, label: "Position", widget: string, default: 50%, required: false }
+                  - name: solid
+                    label: "Solid Color"
+                    widget: object
+                    condition: 
+                      field: params.theme.background.color.type
+                      value: solid
+                    collapsed: true
+                    required: false
+                    fields:
+                    - name: light
+                      label: "Light Mode"
+                      widget: object
+                      required: false
+                      collapsed: true
+                      fields:
+                        - { name: color, label: "Color", widget: color, required: false }
+                    - name: dark
+                      label: "Dark Mode"
+                      widget: object
+                      condition: 
+                        field: params.theme.background.color.lightdarkscheme
+                        value: true
+                      required: false
+                      collapsed: true
+                      fields:
+                        - { name: color, label: "Color", widget: color, required: false }
+              - label: "Font"
+                name: font
+                widget: object
+                required: false
+                collapsed: true
+                fields:
+                  - { label: "Font Family to be used", name: family, widget: string, default: "Roboto, Helvetica, Arial, sans-serif, Times New Roman", required: false} 
+                  - label: "Custom Font"
+                    name: custom
+                    widget: list
+                    required: false
+                    fields:
+                      - { label: "Font Family Name", name: family, widget: string }
+                      - { label: "Font Family URL", name: url, widget: string }
+              - label: "List Options"
+                name: list
+                widget: object
+                required: false
+                collapsed: true
+                fields:  
+                - label: "Section List Options"
+                  name: sectionList
+                  widget: object
+                  required: false
+                  collapsed: true
+                  fields:
+                    - { label: "Article Snippet Style", name: articleSnippetStyle, widget: select, options: [listStyle, boxStyle], required: false } 
+                - label: "Related Article Options"
+                  name: relatedArticle
+                  widget: object
+                  required: false
+                  collapsed: true
+                  fields:
+                    - label: "Enable Related Article"
+                      name: enable
+                      widget: boolean
+                      required: false
+                      default: false
+                    - label: "Article Snippet Style"
+                      name: articleSnippetStyle
+                      widget: select
+                      required: false
+                      options: [listStyle, boxStyle]
+              - label: Sidebar
+                name: sidebar
+                widget: object
+                collapsed: true
+                required: false
+                fields:
+                  - { label: Enabled, name: enable, widget: boolean, required: false, default: false}
+                  - label: Entries
+                    name: entries
+                    widget: list
+                    collapsed: true
+                    condition:
+                      field: params.theme.sidebar.enable
+                      value: true
+                    fields:
+                      - { label: Title, name: title, widget: string, required: false }
+                      - { label: Content, name: content, widget: markdown, required: false}
+                      - label: Legacy Sidebar Implementation (Partials implementation)
+                        name: legacy
+                        widget: object
+                        required: false
+                        collapsed: true
+                        fields:
+                          - { label: Use Partial, name: usePartial, widget: boolean, required: false }
+                          - { label: Partial Path, name: partialPath, widget: string, required: false }
+
+            
+              - label: "Icon Fonts"
+                name: iconFonts
+                widget: object
+                required: false
+                collapsed: true
+                fields:
+                  - label: FontAwesome
+                    name: fontawesome
+                    widget: object
+                    collapsed: true
+                    required: false
+                    fields:
+                      - { name: enable, label: Enable FontAwesome, widget: boolean, required: false, default: false }
+                      - name: type
+                        label: FontAwesome Host
+                        widget: select
+                        options:
+                          - label: "FontAwesome's Kit Service"
+                            value: kits
+                          - label: "CloudFlare's cdnjs Service"
+                            value: cdnjs
+                        default: cdnjs
+                        required: false
+                      - name: kits
+                        label: FontAwesome's Kit Service Options
+                        widget: object
+                        collapsed: true
+                        required: false
+                        condition:
+                          field: params.theme.iconFonts.fontawesome.type
+                          value: kits
+                        fields:
+                          - { name: kitName, label: Kit Name, widget: string, required: false, default: "0" }
+                      - name: cdnjs
+                        label: Cloudflare's cdnjs Options
+                        widget: object
+                        collapsed: true
+                        required: false
+                        condition:
+                          field: params.theme.iconFonts.fontawesome.type
+                          value: cdnjs
+                        fields:
+                          - name: version
+                            label: FontAwesome's Version
+                            widget: select
+                            options:
+                              - label: FontAwesome 6 (6.4.2)
+                                value: 6.4.2
+                              - label: FontAwesome 5 (5.15.4)
+                                value: 5.15.4
+                            required: false
+                            default: 6.4.2
+                  - name: bootstrapIcons
+                    label: Bootstrap Icons
+                    widget: object
+                    collapsed: true
+                    required: false
+                    fields:
+                      - { name: enable, label: Enable FontAwesome, widget: boolean, required: false, default: false }
+                      - name: type
+                        label: Bootstrap Icon Host Host
+                        widget: select
+                        options:
+                          - label: "JSDeliver"
+                            value: jsdeliver
+                          - label: "CloudFlare's cdnjs Service"
+                            value: cdnjs
+                        default: jsdeliver
+                        required: false
+
+                  - name: custom
+                    label: Custom Icon Fonts
+                    widget: object
+                    required: false
+                    collapsed: true
+                    fields:
+                      - name: assets
+                        label: Assets
+                        widget: list
+                        allow_add: true
+                        required: false
+                        collapsed: true
+                        fields:
+                          - { label: "Enable", name: enable, widget: boolean, required: false }
+                          - name: css
+                            label: CSS Paths
+                            collapsed: true
+                            required: false
+                            widget: list
+                            fields:
+                              - name: csspaths
+                                label: Path/URL
+                                widget: string
+                          - name: js
+                            label: Javascript Paths
+                            collapsed: true
+                            required: false
+                            widget: list
+                            fields:
+                              - name: jspaths
+                                label: Path/URL
+                                widget: string
+
+            - label: "CMS Configuration"
+              name: cms
+              widget: object
+              required: false
+              collapsed: true
+              fields:
+                - label: "Backend Information"
+                  name: backend
+                  widget: object
+                  collapsed: true
+                  fields:
+                    - label: "Backend Name"
+                      name: name
+                      widget: select
+                      options: ["git-gateway", "github", "gitlab", "bitbucket", "azure", "test-repo"]
+                    - label: "Github"
+                      name: github
+                      widget: object
+                      collapsed: true
+                      required: false
+                      condition: 
+                        field: params.cms.backend.name
+                        value: github
+                      fields:
+                        - { label: "Repo", name: repo, widget: string, required: false }
+                        - { label: "Branch", name: branch, widget: string, required: false }
+                        - { label: "Auth Endpoint (for non-Netlify users)", name: auth_endpoint, widget: string, required: false }
+                    - label: "Gitlab"
+                      name: gitlab
+                      widget: object
+                      collapsed: true
+                      required: false
+                      condition: 
+                        field: params.cms.backend.name
+                        value: gitlab
+                      fields:
+                        - { label: "Repo", name: repo, widget: string, required: false }
+                        - { label: "Branch", name: branch, widget: string, required: false }
+                        - { label: "Authentication Type (for self-hosted options)", name: auth_type, widget: select, required: false, options: ["pkce"] }
+                        - { label: "App ID (for self-hosted options)", name: app_id, widget: string, required: false }
+                    - label: "Bitbucket"
+                      name: bitbucket
+                      widget: object
+                      collapsed: true
+                      required: false
+                      condition: 
+                        field: params.cms.backend.name
+                        value: bitbucket
+                      fields:
+                        - { label: "Repo", name: repo, widget: string, required: false }
+                        - { label: "Branch", name: branch, widget: string, required: false }
+                        - { label: "Authentication Type (for self-hosted options)", name: auth_type, widget: select, options: ["implicit"], required: false }
+                        - { label: "App ID (for self-hosted options)", name: app_id, widget: string, required: false }
+                    - label: "Azure Repo"
+                      name: azure
+                      widget: object
+                      collapsed: true
+                      required: false
+                      condition: 
+                        field: params.cms.backend.name
+                        value: azure
+                      fields:
+                        - { label: "Repo", name: repo, widget: string, required: false }
+                        - { label: "Tenant ID", name: tenant_id, widget: string, required: false }
+                        - { label: "App ID", name: app_id, widget: string, required: false }
+                - { label: "Media folder directory", name: media_folder, widget: string, required: false}
+                - { label: "Public folder directory", name: public_folder, widget: string, required: false}
+                - { label: "CMS Custom Logo", name: logo_url, widget: image, required: false}
+                - label: "Collections"
+                  name: collections
+                  widget: list
+                  collapsed: true
+                  required: false
+                  fields:
+                    - { label: Label, name: label,  widget: string }
+                    - { label: Name, name: name,  widget: string }
+                    - { label: Folder, name: folder, widget: string, default: "content/posts" }
+                    - { label: Enable Creation, name: create, widget: boolean, default: true, required: false}
+                    - label: "Fields Type"
+                      name: fieldType
+                      widget: select
+                      default: defaultFields
+                      required: true
+                      options:
+                        - label: Default Fields
+                          value: defaultFields
+                        - label: Markdown Page
+                          value: markdownOnly
+                # task: []add customized collections order
+            - label : "Disable Features"
+              name: disableFeature
+              widget: object
+              required: false
+              collapsed: true
+              fields:
+                - { label: "Disable IE Browser Checks", name: IEChecks, widget: boolean ,required: false, default: false }
+                - { label: "Disable Google Translate", name: googleTranslate, widget: boolean ,required: false, default: false }  
+                - { label: "Disable Widgetbot Crate", name: widgetbotcrate, widget: boolean ,required: false, default: false }
+                - { label: "Disable Onesignal SDK(will disable the Onesignal features support)", name: onesignalSDK, widget: boolean, required: false, default: false }
+                - { label: "Disable Facebook SDK (will disable the FB Player)", name: fbSDK, widget: boolean, required: false, default: false }
+                - { label: "Disable Twitter Platform SDK", name: twitterSDK, widget: boolean, required: false, default: false }
+                - { label: "Disable Google Platform SDK", name: googlePlatformSDK, widget: boolean, required: false, default: false }
+            - label: "Copyright Information"
+              name: copyright
+              collapsed: true
+              required: false
+              widget: object
+              fields:
+                - { label: "Copyright Start Date", name: start, widget: datetime, date_format: yyyy, format: 'yyyy', time_format: false}
+                - { label: "Copyright Today Date", name: today, widget: datetime, date_format: 'yyyy', format: 'yyyy', time_format: false }
+                - { label: "Copyright rightholder", name: rightholder, widget: string }
+                - { label: "Copyright notes", name: notes, widget: string }
+                - { label: "Site managed by whom", name: managedByWhom, widget: markdown }
+        - { name: permalinks, widget: hidden, required: false }
+        - { name: enableGitInfo, label: "Enable Git Info", widget: boolean, default: true }
+        - { label: "Enable robots.txt file", name: enableRobotsTXT, widget: boolean, default: false } 
+        - { label: "Build Drafts", name: buildDrafts, widget: boolean, default: false }
+        - label: "Menu Items"
+          name: "menu"
+          widget: object
+          collapsed: true
+          fields:
+          - label: "Header Links"
+            name: main
+            widget: list
+            collapsed: true
+            required: false
+            fields: 
+              - { label: "Identifier", name: identifier, widget: string }
+              - { label: "Name", name: name, widget: string }
+              - label: "Params"
+                name: params
+                widget: object
+                fields:
+                - { label: "URL", name: url, widget: string, required: false, default: / } 
+                - { label: "Icon Font Class", name: iconClass, widget: string, required: false}
+              - { label: "Weight", name: weight, widget: number, value_type: "int", min: 0, step: 1 }
+              - { label: "Parent (use identifier)", name: parent, required: false }
+          - label: Footer Links
+            name: footer
+            widget: list
+            collapsed: true
+            required: false
+            fields:
+              - { label: "Identifier", name: identifier, widget: string}
+              - { label: "Name", name: name, widget: string}
+              - label: Parameters
+                name: params
+                widget: object
+                fields:
+                  - { label: "Icon Font Class", name: iconClass, widget: string, required: false}
+                  - label: Links
+                    name: links
+                    widget: list
+                    collapsed: true
+                    required: false
+                    fields:
+                    - { label: "Name", name: name, widget: string}
+                    - { label: "URL", name: url, widget: string, required: false}
+                    - { label: "Icon Font Class", name: iconClass, widget: string, required: false}
+                    - label: Links
+                      name: links
+                      widget: list
+                      collapsed: true
+                      required: false
+                      fields:
+                        - { label: "Name", name: name, widget: string, required: false}
+                        - { label: "URL", name: url, widget: string, required: false}
+                        - { label: "Icon Font Class", name: iconClass, widget: string, required: false}
+        - {name: outputs, widget: hidden}
