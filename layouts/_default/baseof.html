@@ -16,14 +16,11 @@
     {{- end}}
   </header>
   {{- end}}
-    
+
   {{- block "main" . }}
   {{- end }}
-  
   {{ block "footer" .}}
-  <footer>
-    {{ partial "footer/main.html" . }}
-  </footer>
+  {{ partial "footer/main.html" . }}
   {{- end}} 
 
   {{- block "ending-scripts" .}}
