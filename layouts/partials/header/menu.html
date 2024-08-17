@@ -13,7 +13,7 @@
 <div class="offcanvas offcanvas-end" data-turbo-permanent tabindex="-1" id="offcanvasHeaderNavbar" data-bs-backdrop="true" aria-labelledby="offcanvasHeaderNavbarLabel">
   <div class="offcanvas-header border-bottom">
     <h5 class="offcanvas-title" id="offcanvasHeaderNavbarLabel">
-      <img src='{{$siteLogo}}'>
+      <img src='{{$siteLogo}}' width="50px">
       {{$siteTitle}}
     </h5>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -39,7 +39,9 @@
       {{- end}}
       {{- end}}
       </ul>
+      {{- if .Site.Menus.header}}
       <hr class="d-lg-none my-2">
+      {{- end}}
       <ul class="navbar-nav ms-md-auto mb-2 mb-lg-0">
       {{- if ne hugo.Environment "production"}}
       <li class="nav-item col-lg-auto">
