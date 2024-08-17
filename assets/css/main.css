@@ -3,14 +3,43 @@ header#header{
   position:sticky;
   top: 0;
   margin:0;
+  grid-area: header;
 }
-
+.header-section-vl{
+  margin-left:5px;
+}
+.header-section-vl ul {
+  border-left:1px solid var(--bs-tertiary-color); 
+}
+.header-section-menu::after {
+  /* Set the desired width */
+ font-size: 20px; /* Set the font size */
+}
+aside#sidebar-left{
+  grid-area: aside-left;
+}
+body main{
+  grid-area: main;
+}
+aside#sidebar-right{
+  grid-area: aside-right;
+}
 body footer{
   width:100%;
   clear:both;
   background:orangered;
+  grid-area: footer
 }
-
+@media(min-width: 968px){
+  body {
+    display: grid;
+    grid-template-areas:
+      "header header header"
+      "aside-left main aside-right"
+      "footer footer footer";
+    grid-template-columns: 20% 60% 20%;
+  }
+}
 /* Infopage custom css */
 @media (max-width: 768px){
   main.infopage{
