@@ -1,38 +1,5 @@
-<!--Footer Links    -->
-<!-- Footer -->
 <footer class="text-center text-lg-start bg-body-tertiary text-muted mt-5">
-  <!--  WIP: Footer Social Buttons
-  <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-     Left
-    <div class="me-5 d-none d-lg-block">
-      <span>Get connected with us on social networks:</span>
-    </div>
-
-    Right
-    <div>
-      <a href="" class="me-4 text-reset">
-        <i class="fab fa-facebook-f"></i>
-      </a>
-      <a href="" class="me-4 text-reset">
-        <i class="fab fa-twitter"></i>
-      </a>
-      <a href="" class="me-4 text-reset">
-        <i class="fab fa-google"></i>
-      </a>
-      <a href="" class="me-4 text-reset">
-        <i class="fab fa-instagram"></i>
-      </a>
-      <a href="" class="me-4 text-reset">
-        <i class="fab fa-linkedin"></i>
-      </a>
-      <a href="" class="me-4 text-reset">
-        <i class="fab fa-github"></i>
-      </a>
-    </div>
-  </section>
-  <!-- Section: Social media -->
-
-  <section id="footer-item-container" class="p-5 ">
+  <section id="footer-item-container" class="pt-2 container-xl">
       <!--Website information-->
       <div class="row mt-3">
         <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
@@ -43,7 +10,7 @@
             {{.Site.Params.identity.general.description}}
           </p>
         </div>
-        
+        <!--Footer Links Section-->
         {{- range .Site.Menus.footer}}
         <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
           <h6 class="text-uppercase fw-bold mb-4">
@@ -69,11 +36,25 @@
         <!-- Grid column -->
         {{- end}}
   </section>
-  <!-- Copyright -->
-  <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-    Copyright  © {{- now.Year }}: 
-    <a class="text-reset fw-bold" href="{{.Site.BaseURL}}">{{.Site.Title}}</a>
-  </div>
-  <!-- Copyright -->
+  {{- $siteLogo := "https://placehold.co/60x60/png" -}}
+  {{- with .Site.Params.identity.general.logo}}
+    {{- $siteLogo = . -}}
+  {{- end}}
+  <section class="d-flex container-xl flex-wrap justify-content-between align-items-center py-3 mt-4 border-top">
+      <!--Copyright Section-->
+      <div class="col-md-4 d-flex align-items-center text-start">
+        <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+          <img src="{{- $siteLogo }}" width="50px">
+        </a>
+        <span class="mb-3 mb-md-0 text-body-secondary">© {{- now.Year }} {{.Site.Title}}.
+          {{- with .Site.Params.identity.copyright.notice}}
+          <br>
+          {{.}}
+          {{- end}}
+        </span>
+      </div>
+      <!--WIP: Socials Section-->
+      <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+        <li class="ms-3"></li>
+      </ul>
 </footer>
-<!-- Footer -->
