@@ -56,16 +56,17 @@
         
         {{ range $pages }}
             {{ $allPages = $allPages | append . }}
-        {{ end }}
-
-
+        {{ end }}  
 
         <h6>Browse {{$sectionTitle}}:</h6>
           {{ range sort $allPages "Title" }}
           
           {{if .IsPage}}
           <li class="nav-link">
-            <a class="nav-link" aria-current="page" href="{{.Permalink}}">{{.Title}}</a>
+            <a class="nav-link" aria-current="page" href="{{.Permalink}}">
+              <i class="bi bi-file-earmark"></i>
+              {{.Title}}
+            </a>
           </li>
           {{ else}}       
             {{ partial "header/section/menu-recursive.html" . }}

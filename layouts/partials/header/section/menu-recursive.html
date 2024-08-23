@@ -2,7 +2,7 @@
 <li class="nav-link navbar-nav border-0 my-0 p-0">
   <div class="dropdown">
     <div class="btn-group nav-link my-0 p-0" role="group" aria-label="Basic example">
-      <a type="button" href="{{ .RelPermalink }}" class="nav-link d-inline">
+      <i class="bi bi-folder"></i> <a type="button" href="{{ .RelPermalink }}" class="nav-link d-inline">
         {{.Title}}
       </a>
       <button type="button" class="btn-lg header-section-menu nav-link d-inline dropdown-toggle border-0 my-0 p-0" data-bs-toggle="dropdown" aria-expanded="false"></button>
@@ -13,7 +13,7 @@
             {{ partial "header/section/menu-recursive.html" . }}
             {{- else}}
             <li><a class="dropdown-item p-0 ps-2" href="{{ .RelPermalink }}">
-              {{ .Title }}
+              <i class="bi bi-file-earmark"></i> {{ .Title }}
             </a></li>    
             {{ end }}
           {{ end }}
