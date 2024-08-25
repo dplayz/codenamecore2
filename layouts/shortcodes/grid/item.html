@@ -1,0 +1,10 @@
+{{ $class := (.Parent.Get "columnClass") }}
+{{- if (.Get "class")}}
+    {{ $class = (.Get "class") }}
+{{- end}}
+<div class="{{$class}}">
+    <div class="p-5 border rounded">
+        {{.Inner | safeHTML}}
+    </div>
+</div>
+
