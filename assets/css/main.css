@@ -21,9 +21,6 @@ aside#sidebar-left{
 body main{
   grid-area: main;
 }
-aside#sidebar-right{
-  grid-area: aside-right;
-}
 body footer{
   width:100%;
   clear:both;
@@ -87,7 +84,6 @@ main.infopage a.btn{
   overflow-wrap: anywhere;
 }
 
-
 main.infopage .accordion-button{
   box-shadow:unset;
   border-radius:var(--bs-accordion-inner-border-radius);
@@ -143,6 +139,13 @@ main.infopage .accordion-button{
   main[data-page-toc="true"].main-content section.blog-interactions{
     grid-area: bpInteractions;
   }
+}
+
+/* Page hero */
+.pagehero{
+  background-position: center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
 }
 
 /* Icon Fixes*/

@@ -1,0 +1,14 @@
+{{- if eq (.Get "type") "hero"}}
+{{$background := (.Get "heroBackground")}}
+<div style="background:url({{$background}});"
+    class='pagehero container-fluid border-bottom py-5 p-sm-5'>
+    <div class="mx-auto container-lg border text-center py-5 p-sm-5 rounded-3 bg-auto"
+        style="--bs-bg-opacity: .75;">
+       {{.Inner | markdownify }}
+    </div>
+</div>
+{{- else}}
+<div class="container-xxl mx-3 px-3 py-1" >
+    {{.Inner | markdownify }}
+</div>
+{{- end}}
