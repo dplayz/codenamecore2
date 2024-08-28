@@ -1,0 +1,14 @@
+{{if (.Get "onclick")}}
+<button 
+    onclick='{{.Get "onclick" | safeJS}}'
+    type="button"  
+    class='btn {{if (.Get "variant")}}{{- else}}btn-primary{{- end}}'>
+    {{- if (.Get "name")}}{{- .Get "name"}}{{- else }}{{.Inner}}{{- end}}
+</button>
+{{ else}}
+<a 
+    href='{{.Get "link" | safeURL}}'
+    class='btn {{if (.Get "variant")}}{{- else}}btn-primary{{- end}}'>
+    {{- if (.Get "name")}}{{- .Get "name"}}{{- else }}{{.Inner}}{{- end}}
+</a>
+{{- end}}
