@@ -30,6 +30,7 @@ body footer{
   background:orangered;
   grid-area: footer
 }
+/* Temporarily disable this thing
 @media(min-width: 968px){
   body {
     display: grid;
@@ -39,7 +40,7 @@ body footer{
       "footer footer footer";
     grid-template-columns: 20% 60% 20%;
   }
-}
+}*/
 /* Infopage custom css */
 @media (max-width: 768px){
   main.infopage{
