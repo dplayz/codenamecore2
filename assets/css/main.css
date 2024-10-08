@@ -89,6 +89,21 @@ main.infopage .accordion-button{
   border-radius:var(--bs-accordion-inner-border-radius);
 }
 
+main.infopage .accordion .accordion-body{
+  padding: 2.5%;
+}
+
+@media (max-width:568px) {
+  main.infopage > .accordion,
+  main.infopage > .dynamicContent > .accordion{
+    width: 90% !important;
+    margin: auto;
+  }
+  main.infopage > .dynamicContent{
+    width:100%;
+  }
+}
+
 /* Blog TOC Layout
   TOC must be explicitly enabled
 */
