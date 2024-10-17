@@ -1,6 +1,6 @@
 <div class="dropdown">
     <button class="btn btn-sm btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (light)" data-twofas-element-number="1">
-      <i class="theme-icon-active bi bi-circle-half"></i>
+      <i id="theme-icon-active" class="bi bi-circle-half"></i>
       <span class="d-lg-none ms-2" id="bd-theme-text">
         {{- if ne .Params.layout "infopage"}}
         Toggle theme
@@ -8,24 +8,25 @@
       </span>
     </button>
     <ul class='dropdown-menu {{ if ne .Params.layout "infopage"}}dropdown-menu-end{{ end}}' aria-labelledby="bd-theme-text">
+    <li><span class="ms-2">Color Scheme:</span> </li>
       <li>
-        <button type="button" class="btn-sm dropdown-item d-flex align-items-center active" data-bs-theme-value="light" aria-pressed="true">
+        <button type="button" onclick="setTheme('light')" class="btn-sm dropdown-item d-flex align-items-center active" data-theme-toggler-value="default-light" aria-pressed="true">
           <i class="bi bi-sun-fill"></i>
           Light
           <svg class="bi d-none" height="20px" width="20px"><use href="#check2"></use></svg>
         </button>
       </li>
       <li>
-        <button type="button" class="btn-sm dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+        <button type="button" onclick="setTheme('dark')" class="btn-sm dropdown-item d-flex align-items-center" data-theme-toggler-value="default-dark" aria-pressed="false">
           <i class="bi bi-moon-stars-fill"></i>
           Dark  
         </button>
       </li>
       <li>
-        <button type="button" class="btn-sm dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="false">
+        <button type="button" onclick="setTheme('auto')" class="btn-sm dropdown-item d-flex align-items-center" data-theme-toggler-value="default-auto" aria-pressed="false">
           <i class="bi bi-circle-half"></i>
           Auto
-          <svg class="bi d-none" height="20px" width="20px"><use href="#check2"></use></svg>
+          <svg  class="bi d-none" height="20px" width="20px"><use href="#check2"></use></svg>
         </button>
       </li>
 

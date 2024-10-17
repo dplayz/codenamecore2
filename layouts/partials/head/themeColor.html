@@ -1,84 +1,98 @@
-<script data-turbo-eval="true">
-/*!
- * Color mode toggler for Bootstrap's docs (https://getbootstrap.com/)
- * Copyright 2011-2024 The Bootstrap Authors
- * Licensed under the Creative Commons Attribution 3.0 Unported License.
- */
+<script data-turbo-eval="false">
+// Color Scheme Handler
 
- (() => {
-  'use strict'
+// Initialization
+const initialColorScheme = localStorage.getItem("colorScheme");
+if (initialColorScheme == null || initialColorScheme == "") {
+    localStorage.setItem("colorScheme", "auto");
+    document.documentElement.setAttribute('data-bs-theme', initialColorScheme);
+}
+var initialThemeName = localStorage.getItem("themeName");
+if (initialThemeName == null || initialThemeName == "") {
+    localStorage.setItem("themeName", "default");
+}
+document.documentElement.setAttribute('data-theme-name', initialThemeName);
 
-  var getStoredTheme = () => localStorage.getItem('theme')
-  var setStoredTheme = theme => localStorage.setItem('theme', theme)
+document.addEventListener(["turbo:load"], (event) => {
+    var themeTogglerBtn = document.querySelector(`[data-theme-toggler-value="${initialThemeName}-${initialColorScheme}"]`);
+    var themeTogglerIcon = themeTogglerBtn.children[0].classList;
+    var activeThemeIcon = document.getElementById("theme-icon-active");
 
-  var getPreferredTheme = () => {
-    var storedTheme = getStoredTheme()
-    if (storedTheme) {
-      return storedTheme
-    }
-
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-  }
-
-  var setTheme = theme => {
-    if (theme === 'auto') {
-      document.documentElement.setAttribute('data-bs-theme', (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'))
-    } else {
-      document.documentElement.setAttribute('data-bs-theme', theme)
-    }
-  }
-
-  setTheme(getPreferredTheme())
-
-  var showActiveTheme = (theme, focus = false) => {
-    var themeSwitcher = document.querySelector('#bd-theme')
-
-    if (!themeSwitcher) {
-      return
-    }
-
-    var themeSwitcherText = document.querySelector('#bd-theme-text')
-    var activeThemeIcon = document.querySelector('.theme-icon-active')
-    var btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
-    var svgOfActiveBtn = btnToActive.querySelector('i').getAttribute('class')
-
-    document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+    document.querySelectorAll('[data-theme-toggler-value]').forEach(element => {
       element.classList.remove('active')
       element.setAttribute('aria-pressed', 'false')
     })
 
-    btnToActive.classList.add('active')
-    btnToActive.setAttribute('aria-pressed', 'true')
-    activeThemeIcon.setAttribute('class', "theme-icon-active " + svgOfActiveBtn)
-    var themeSwitcherLabel = `${themeSwitcherText.textContent} (${btnToActive.dataset.bsThemeValue})`
-    themeSwitcher.setAttribute('aria-label', themeSwitcherLabel)
+    activeThemeIcon.className = "";
+    themeTogglerIcon.forEach(function(cls) {
+        activeThemeIcon.classList.add(cls);
+    });
 
-    if (focus) {
-      themeSwitcher.focus()
+    themeTogglerBtn.classList.toggle("active");
+    themeTogglerBtn.setAttribute('aria-pressed', 'true');
+});
+
+
+const colorSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+const handleAutoColorSchemeChange = (event) => {
+    if (event.matches) {
+			document.documentElement.setAttribute('data-bs-theme', "dark");
+
+    } else {
+			document.documentElement.setAttribute('data-bs-theme', "light");
     }
-  }
+};
 
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-    var storedTheme = getStoredTheme()
-    if (storedTheme !== 'light' && storedTheme !== 'dark') {
-      setTheme(getPreferredTheme())
+if (initialColorScheme === 'auto') {
+    handleAutoColorSchemeChange(colorSchemeQuery);
+    colorSchemeQuery.addEventListener('change', handleAutoColorSchemeChange);
+} else {
+    document.documentElement.setAttribute('data-bs-theme', initialColorScheme);
+}
+
+// Color Scheme Switcher 
+function setTheme(colorScheme, themeName, iconClass) {
+
+    if (themeName == undefined){
+      themeName = "default"
     }
-  })
 
-  window.addEventListener('DOMContentLoaded', () => {
-    showActiveTheme(getPreferredTheme())
+    if (themeName !== "default" && iconClass !== null) {
+        //document.getElementById("themeSwitcherActiveIcon").className(iconClass);
+    }
 
-    document.querySelectorAll('[data-bs-theme-value]')
-      .forEach(toggle => {
-        toggle.addEventListener('click', () => {
-          var theme = toggle.getAttribute('data-bs-theme-value')
-          setStoredTheme(theme)
-          setTheme(theme)
-          showActiveTheme(theme, true)
-        })
-      })
-  })
-})()
+    document.querySelectorAll('[data-theme-toggler-value]').forEach(element => {
+      element.classList.remove('active')
+      element.setAttribute('aria-pressed', 'false')
+    })
+    
+    var themeTogglerBtn = document.querySelector(`[data-theme-toggler-value="${themeName}-${colorScheme}"]`);
+    var themeTogglerIcon = themeTogglerBtn.children[0].classList;
+    var activeThemeIcon = document.getElementById("theme-icon-active");
 
+    activeThemeIcon.className = "";
+    themeTogglerIcon.forEach(function(cls) {
+        activeThemeIcon.classList.add(cls);
+    });
 
+    themeTogglerBtn.classList.toggle("active");
+    themeTogglerBtn.setAttribute('aria-pressed', 'true');
+
+    if (colorScheme === "auto") {
+        handleAutoColorSchemeChange(colorSchemeQuery);
+        colorSchemeQuery.addEventListener('change', handleAutoColorSchemeChange);
+
+        localStorage.setItem("colorScheme", "auto");
+    } else {
+        colorSchemeQuery.removeEventListener('change', handleAutoColorSchemeChange);
+
+        localStorage.setItem("colorScheme", colorScheme);
+        document.documentElement.setAttribute('data-bs-theme', colorScheme);
+    }
+
+    if (themeName !== undefined && themeName !== null) {
+        localStorage.setItem("themeName", themeName);
+        document.documentElement.setAttribute('data-theme-name', themeName);
+    }
+}
 </script>
