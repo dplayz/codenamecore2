@@ -2,15 +2,23 @@
 // Color Scheme Handler
 
 // Initialization
-const initialColorScheme = localStorage.getItem("colorScheme");
+var initialColorScheme = localStorage.getItem("colorScheme");
+var initialThemeName = localStorage.getItem("themeName");
+
 if (initialColorScheme == null || initialColorScheme == "") {
     localStorage.setItem("colorScheme", "auto");
-    document.documentElement.setAttribute('data-bs-theme', initialColorScheme);
+    document.documentElement.setAttribute('data-bs-theme');
 }
-var initialThemeName = localStorage.getItem("themeName");
 if (initialThemeName == null || initialThemeName == "") {
     localStorage.setItem("themeName", "default");
 }
+
+if (urlParamValues.theme != undefined){
+    urlParamValues.theme = urlParamValues.theme.replace(/[ .]/g, "").split("-"); // This makes dash as delimiter to theme name and color scheme, and removes illegal characters to the theme name.
+    initialColorScheme = urlParamValues.theme[1];
+    initialThemeName = urlParamValues.theme[0];
+}
+
 document.documentElement.setAttribute('data-theme-name', initialThemeName);
 
 document.addEventListener(["turbo:load"], (event) => {
