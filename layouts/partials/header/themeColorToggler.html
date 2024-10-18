@@ -29,5 +29,16 @@
           <svg  class="bi d-none" height="20px" width="20px"><use href="#check2"></use></svg>
         </button>
       </li>
+      {{- range .Site.Params.theme.custom }}
+      {{ with . }}
+        {{- $name := (replaceRE "[ -.]" "" .name) -}}
+        <li>
+          <button type="button" onclick="setTheme('{{.baseColorScheme}}', '{{$name}}')" class="btn-sm dropdown-item d-flex align-items-center" data-theme-toggler-value="{{$name  }}-{{.baseColorScheme}}" aria-pressed="false">
+            <i class="{{.iconClass}}"></i>  
+            {{.name}}
+          </button>
+        </li>   
+      {{ end }}
 
+      {{- end}}
 </div>
