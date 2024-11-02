@@ -1,79 +1,62 @@
+<!--Color Scheme Handler v0.0.2-->
 <script data-turbo-eval="false">
-// Color Scheme Handler
+    // Essential Script - Color Scheme Handler 1
+    const colorSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleAutoColorSchemeChange = (event) => {
+        event.matches
+        ? document.documentElement.setAttribute('data-bs-theme', "dark")
+        : document.documentElement.setAttribute('data-bs-theme', "light");
+    };
+    var initialColorScheme = localStorage.getItem("colorScheme") !== null && localStorage.getItem("colorScheme") !== "" 
+        ?  localStorage.getItem("colorScheme")
+        : "auto";
+    var initialThemeName = localStorage.getItem("themeName") !== null && localStorage.getItem("themeName") !== "" 
+        ?  localStorage.getItem("themeName")
+        : "default";
+    document.documentElement.setAttribute('data-theme-name', initialThemeName);
+    initialColorScheme === 'auto'
+    ?   (handleAutoColorSchemeChange(colorSchemeQuery), colorSchemeQuery.addEventListener('change', handleAutoColorSchemeChange))
+    :   document.documentElement.setAttribute('data-bs-theme',  initialColorScheme)
 
-// Initialization
-var initialColorScheme = localStorage.getItem("colorScheme");
-var initialThemeName = localStorage.getItem("themeName");
+</script>
 
-if (initialColorScheme == null || initialColorScheme == "") {
-    localStorage.setItem("colorScheme", "auto");
-    document.documentElement.setAttribute('data-bs-theme');
-}
-if (initialThemeName == null || initialThemeName == "") {
-    localStorage.setItem("themeName", "default");
-}
-
-if (urlParamValues.theme != undefined){
-    urlParamValues.theme = urlParamValues.theme.replace(/[ .]/g, "").split("-"); // This makes dash as delimiter to theme name and color scheme, and removes illegal characters to the theme name.
-    initialColorScheme = urlParamValues.theme[1];
-    initialThemeName = urlParamValues.theme[0];
-}
-
-document.documentElement.setAttribute('data-theme-name', initialThemeName);
-
+<script defer data-turbo-eval="false">
+// Deferred Script - Color Scheme Handler 2
 document.addEventListener(["turbo:load"], (event) => {
     var themeTogglerBtn = document.querySelector(`[data-theme-toggler-value="${initialThemeName}-${initialColorScheme}"]`);
     var themeTogglerIcon = themeTogglerBtn.children[0].classList;
     var activeThemeIcon = document.getElementById("theme-icon-active");
 
     document.querySelectorAll('[data-theme-toggler-value]').forEach(element => {
-      element.classList.remove('active')
-      element.setAttribute('aria-pressed', 'false')
+        element.classList.remove('active')
+        element.setAttribute('aria-pressed', 'false')
     })
-
     activeThemeIcon.className = "";
     themeTogglerIcon.forEach(function(cls) {
         activeThemeIcon.classList.add(cls);
     });
-
     themeTogglerBtn.classList.toggle("active");
     themeTogglerBtn.setAttribute('aria-pressed', 'true');
+
+    // Accepts the ?theme=themename-colorscheme parameter
+    if (urlParamValues.theme != undefined){
+        urlParamValues.theme = urlParamValues.theme.includes(".") || urlParamValues.theme.includes(" ")
+            ? urlParamValues.theme.replace(/[ .]/g, "").split("-")
+            : urlParamValues.theme.split("-");
+        setTheme(urlParamValues.theme[1], urlParamValues.theme[0])
+    }
 });
-
-
-const colorSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
-const handleAutoColorSchemeChange = (event) => {
-    if (event.matches) {
-			document.documentElement.setAttribute('data-bs-theme', "dark");
-
-    } else {
-			document.documentElement.setAttribute('data-bs-theme', "light");
-    }
-};
-
-if (initialColorScheme === 'auto') {
-    handleAutoColorSchemeChange(colorSchemeQuery);
-    colorSchemeQuery.addEventListener('change', handleAutoColorSchemeChange);
-} else {
-    document.documentElement.setAttribute('data-bs-theme', initialColorScheme);
-}
-
-// Color Scheme Switcher 
+// Deferred Script - Color Scheme Switcher 
 function setTheme(colorScheme, themeName, iconClass) {
-
-    if (themeName == undefined){
-      themeName = "default"
-    }
-
+    themeName = themeName == undefined ? themeName = "default" : themeName;
     if (themeName !== "default" && iconClass !== null) {
         //document.getElementById("themeSwitcherActiveIcon").className(iconClass);
     }
-
     document.querySelectorAll('[data-theme-toggler-value]').forEach(element => {
-      element.classList.remove('active')
-      element.setAttribute('aria-pressed', 'false')
+        element.classList.remove('active')
+        element.setAttribute('aria-pressed', 'false')
     })
-    
+    console.log(`[data-theme-toggler-value="${themeName}-${colorScheme}"]`)
     var themeTogglerBtn = document.querySelector(`[data-theme-toggler-value="${themeName}-${colorScheme}"]`);
     var themeTogglerIcon = themeTogglerBtn.children[0].classList;
     var activeThemeIcon = document.getElementById("theme-icon-active");
@@ -89,15 +72,12 @@ function setTheme(colorScheme, themeName, iconClass) {
     if (colorScheme === "auto") {
         handleAutoColorSchemeChange(colorSchemeQuery);
         colorSchemeQuery.addEventListener('change', handleAutoColorSchemeChange);
-
         localStorage.setItem("colorScheme", "auto");
     } else {
-        colorSchemeQuery.removeEventListener('change', handleAutoColorSchemeChange);
-
+        colorSchemeQuery.removeEventListener('change', handleAutoColorSchemeChange)
         localStorage.setItem("colorScheme", colorScheme);
         document.documentElement.setAttribute('data-bs-theme', colorScheme);
     }
-
     if (themeName !== undefined && themeName !== null) {
         localStorage.setItem("themeName", themeName);
         document.documentElement.setAttribute('data-theme-name', themeName);
