@@ -1,6 +1,6 @@
 <!--Color Scheme Handler v0.0.2-->
 <script data-turbo-eval="false">
-    // Essential Script - Color Scheme Handler 1
+    // Essential Script - Color Scheme Handler 1: Initializes and defines the theme and color scheme to be used
     const colorSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleAutoColorSchemeChange = (event) => {
         event.matches
@@ -21,7 +21,7 @@
 </script>
 
 <script defer data-turbo-eval="false">
-// Deferred Script - Color Scheme Handler 2
+// Deferred Script - Color Scheme Handler 2: Initializes the theme switcher icon on page load, accepts ?theme parameter
 document.addEventListener(["turbo:load"], (event) => {
     var themeTogglerBtn = document.querySelector(`[data-theme-toggler-value="${initialThemeName}-${initialColorScheme}"]`);
     var themeTogglerIcon = themeTogglerBtn.children[0].classList;
@@ -46,7 +46,7 @@ document.addEventListener(["turbo:load"], (event) => {
         setTheme(urlParamValues.theme[1], urlParamValues.theme[0])
     }
 });
-// Deferred Script - Color Scheme Switcher 
+// Deferred Script - Color Scheme Switcher: The function that poweres the theme changing
 function setTheme(colorScheme, themeName, iconClass) {
     themeName = themeName == undefined ? themeName = "default" : themeName;
     if (themeName !== "default" && iconClass !== null) {
