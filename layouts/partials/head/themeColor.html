@@ -1,4 +1,4 @@
-<!--Color Scheme Handler v0.0.2-->
+<!--Theme and Color Scheme Handler v0.0.3-->
 <script data-turbo-eval="false">
     // Essential Script - Color Scheme Handler 1: Initializes and defines the theme and color scheme to be used
     const colorSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -83,4 +83,33 @@ function setTheme(colorScheme, themeName, iconClass) {
         document.documentElement.setAttribute('data-theme-name', themeName);
     }
 }
+// Deferred Script -- theme:change Event: Allows scripts to watch theme and color scheme changes
+// Initial theme:change dispatch
+document.addEventListener('turbo:load', (e) => {  
+    var attributes = {
+        themeName: document.documentElement.getAttribute("data-theme-name"),
+        colorScheme: document.documentElement.getAttribute("data-bs-theme")
+    }
+    const event = new CustomEvent("theme:change", {
+      detail: { themeName: attributes.themeName, colorScheme: attributes.colorScheme }
+    });
+    document.dispatchEvent(event);
+});
+// Observe the html tag, then send an theme:change event
+const callback = (mutationList, observer) => {
+  var attributes = [];
+  for (const mutation of mutationList) {
+    if (mutation.attributeName == "data-theme-name"){
+        attributes.themeName = mutation.target.getAttribute("data-theme-name");
+    } else if (mutation.attributeName == "data-bs-theme") {
+        attributes.colorScheme = mutation.target.getAttribute("data-bs-theme");
+    }
+  }
+  const event = new CustomEvent("theme:change", {
+      detail: { themeName: attributes.themeName, colorScheme: attributes.colorScheme }
+    });
+  document.dispatchEvent(event);
+};
+const observer = new MutationObserver(callback);
+observer.observe(document.documentElement, { attributes: true });
 </script>
