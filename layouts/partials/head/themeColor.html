@@ -105,10 +105,12 @@ const callback = (mutationList, observer) => {
         attributes.colorScheme = mutation.target.getAttribute("data-bs-theme");
     }
   }
+  if (attributes.themeName != null && attributes.colorScheme != null){
   const event = new CustomEvent("theme:change", {
       detail: { themeName: attributes.themeName, colorScheme: attributes.colorScheme }
     });
   document.dispatchEvent(event);
+  }
 };
 const observer = new MutationObserver(callback);
 observer.observe(document.documentElement, { attributes: true });
