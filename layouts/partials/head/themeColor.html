@@ -1,4 +1,4 @@
-<!--Theme and Color Scheme Handler v0.0.3-->
+<!--Theme and Color Scheme Handler v0.0.4-->
 <script data-turbo-eval="false">
     // Essential Script - Color Scheme Handler 1: Initializes and defines the theme and color scheme to be used
     const colorSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -91,7 +91,7 @@ document.addEventListener('turbo:load', (e) => {
         colorScheme: document.documentElement.getAttribute("data-bs-theme")
     }
     const event = new CustomEvent("theme:change", {
-      detail: { themeName: attributes.themeName, colorScheme: attributes.colorScheme }
+      detail: { themeName: attributes.themeName, colorScheme: attributes.colorScheme, sentBy: "initialDispatch" }
     });
     document.dispatchEvent(event);
 });
@@ -106,10 +106,10 @@ const callback = (mutationList, observer) => {
     }
   }
   if (attributes.themeName != null && attributes.colorScheme != null){
-  const event = new CustomEvent("theme:change", {
-      detail: { themeName: attributes.themeName, colorScheme: attributes.colorScheme }
+    const event = new CustomEvent("theme:change", {
+        detail: { themeName: attributes.themeName, colorScheme: attributes.colorScheme, sentBy: "mutationObserver" }
     });
-  document.dispatchEvent(event);
+    document.dispatchEvent(event);
   }
 };
 const observer = new MutationObserver(callback);
