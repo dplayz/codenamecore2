@@ -4,7 +4,7 @@
   {{- $sectionTitle = . -}}
 {{- end}}
 {{- $sectionMenu := .Params.details.menu }}
-<nav class="px-2 py-0 border-top navbar container-fluid navbar-light">
+<nav class="px-2 py-0 border-top navbar container-xxl navbar-light">
     <div class="d-flex align-items-center">
       <button class="navbar-toggler btn-xs btn me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSectionNavbar" aria-controls="offcanvasSectionNavbar" aria-expanded="false" aria-label="Toggle navigation">
         <small class="navbar-toggler-icon"></small>
@@ -58,7 +58,7 @@
             {{ $allPages = $allPages | append . }}
         {{ end }}  
 
-        <h6>Browse {{$sectionTitle}}:</h6>
+        <h6>Browse {{$sectionTitle | pluralize}}:</h6>
           {{ range sort $allPages "Title" }}
           
           {{if .IsPage}}
