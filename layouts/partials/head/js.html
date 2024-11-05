@@ -1,3 +1,26 @@
+{{- range .Site.Params.theme.custom}}
+{{ $themeName := (replaceRE "[ -.]" "" .name) }}
+{{ $colorScheme := .baseColorScheme }}
+{{ $fullThemeName := printf "%s-%s" $themeName $colorScheme }}
+{{ $themeAssets := resources.Match (printf "theme/%s/*" $fullThemeName)}}
+    {{ range $themeAssets }}
+        {{- if eq (path.Ext .RelPermalink) ".css" -}}
+            <link rel="stylesheet" href="{{ .RelPermalink }}">
+        {{- else if eq (path.Ext .RelPermalink) ".js" -}}
+            <script src="{{ .RelPermalink }}"></script>
+        {{- else if eq (path.Base .Name) "external-vendor.yml" -}}
+            {{ $externalVendors := transform.Unmarshal .Content }}
+            {{- range $externalVendors.vendors}}
+                {{- if eq .type "js"}}
+                <script src="{{.path}}" integrity="{{.integrity}}" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                {{- else if eq .type "css"}}
+                <link href="{{.path}}" rel="stylesheet">
+                {{- end}}
+            {{- end}}
+        {{- end }}
+    {{ end }}
+{{- end}}
+
 {{- with resources.Get "js/main.js" }}
   {{- if eq hugo.Environment "development" }}
     {{- with . | js.Build }}
