@@ -7,7 +7,8 @@
   {{- $siteTitle = . -}}
 {{- end}}
 {{- $siteBaseURL := .Site.BaseURL -}}
-<nav data-turbo-permanent class="container-xxl px-2 navbar container-fluid navbar-expand-lg">
+<div id="campaign-widget" data-turbo-permanent="true"></div>
+<nav class="container-xxl px-2 navbar container-fluid navbar-expand-lg">
     <a class="navbar-brand" href="{{$siteBaseURL}}">
         <img src="{{$siteLogo}}" width="60px">
         <small class="d-none d-lg-inline">{{$siteTitle}}</small>
