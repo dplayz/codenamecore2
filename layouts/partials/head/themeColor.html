@@ -95,23 +95,30 @@ document.addEventListener('turbo:load', (e) => {
     });
     document.dispatchEvent(event);
 });
-// Observe the html tag, then send an theme:change event
 const callback = (mutationList, observer) => {
   var attributes = [];
   for (const mutation of mutationList) {
-    if (mutation.attributeName == "data-theme-name"){
-        attributes.themeName = mutation.target.getAttribute("data-theme-name");
+    if (mutation.attributeName == "data-theme-name") {
+      attributes.themeName = mutation.target.getAttribute("data-theme-name");
     } else if (mutation.attributeName == "data-bs-theme") {
-        attributes.colorScheme = mutation.target.getAttribute("data-bs-theme");
+      attributes.colorScheme = mutation.target.getAttribute("data-bs-theme");
     }
   }
-  if (attributes.themeName != null && attributes.colorScheme != null){
+
+  if (attributes.themeName != null && attributes.colorScheme != null) {
+    // Temporarily disconnect the observer to avoid an infinite loop
+    observer.disconnect();
+
     const event = new CustomEvent("theme:change", {
-        detail: { themeName: attributes.themeName, colorScheme: attributes.colorScheme, sentBy: "mutationObserver" }
+      detail: { 
+        themeName: attributes.themeName, 
+        colorScheme: attributes.colorScheme, 
+        sentBy: "mutationObserver" 
+      }
     });
     document.dispatchEvent(event);
+
+    observer.observe(document.documentElement, { attributes: true });
   }
 };
-const observer = new MutationObserver(callback);
-observer.observe(document.documentElement, { attributes: true });
 </script>
